@@ -10,15 +10,17 @@ Only Windows Admin Center VM will be created once ARM template successfully depl
 
 ### **Architecture of the deployment** (Aks Hci on Azure VM)
 
-Following drawing shows the end result comes from ARM template once **'onAzureVMDirectly'** option in 'Aks Hci Scenario' parameter selected.
+Following illustration shows the target architecture once the selection for 'Aks Hci Scenario' set to **'onAzureVMDirectly'**
+
+Windows Admin Center VM will be created once ARM template deployed successfully. Either Windows Admin Center Kubernetes extension or PowerShell scripts (available on the desktop) could be utilized at this point to deploy Aks Hci clusters.
 
 ![AksHciOnAzureStackHci](https://github.com/Azure/AksHcionAzureVM/raw/master/.images/AksHcionAzureVM.png)
 
 ## Aks Hci on Azure Stack HCI cluster
 
-Following drawing shows the end result comes from ARM template once **'onNestedAzureStackHciClusteronAzureVM'** option in 'Aks Hci Scenario' parameter selected.
+Following illustration shows the target architecture once the selection for 'Aks Hci Scenario' set to **'onNestedAzureStackHciClusteronAzureVM'**
 
-Azure Stack HCI host and Windows Admin Center VMs will be created once ARM template successfully deployed. Windows Admin center or PowerShell scripts (available to the desktop) may be utilized for completing Azure Stack HCI deployment in couple of minutes. Afterwards Aks Hci may be deployed on top of Azure Stack HCI clusters using provided scripts (available to the desktop).
+Azure Stack HCI and Windows Admin Center VMs will be created once ARM template deployed successfully. Either Windows Admin center or PowerShell scripts (available on the desktop) could be utilized to complete Azure Stack HCI deployment in couple of minutes. Afterwards Aks Hci could be deployed on top of Azure Stack HCI clusters using provided scripts (available on the desktop) or Windows Admin Center Kubernetes extension.
 
 **Note**: Due to nature of multiple layers of Nested virtualization, there are performance implications. However this is implemented to practice bits and pieces of the whole deployment to experience Aks Hci on top of Azure Stack HCI.
 
@@ -82,15 +84,16 @@ There are couple of shortcuts available on the desktop. Desktop shortcuts can be
 
 * Proof of concepts guide (**PoC guide**) on the desktop ([this guide](https://azure.github.io/AksHcionAzureVM/))
 * Step by step script PoC script (**lab script**) on the desktop, the script includes following options
-  * Deployment of Azure Stack HCI cluster through a wizard. (Depends on the scenario selected)
+  * Deployment of Azure Stack HCI cluster through a wizard (Depends on the scenario selected)
+  * Registration of Azure Stack HCI to Azure Arc (Depends on the scenario selected)
   * Tools and prerequisites installations
   * Management and Target Aks clusters deployment
-  * Azure Arc onboarding process
-  * Enable Azure Arc montioring
-  * Deploy demo application to Kubernetes cluster onboarded to Azure Arc
-  * Scale up kubernetes cluster
-  * Deployment of an older version of Kubernetes cluster than updating the cluster to newer version
-  * Uninstall onboarding from Azure Arc
+  * Azure Arc onboarding process (Registration Kubernetes Cluster to Azure Arc)
+  * Enable Azure Arc monitoring
+  * Deploy demo application to Kubernetes cluster onboarded (registered) to Azure Arc
+  * Scale up kubernetes clusters
+  * Deployment of an older version of Kubernetes cluster than updating the cluster to newer versions
+  * Uninstall (unregister) onboarding from Azure Arc
   * Destroy kubernetes cluster
   * Remove Aks Hci deployment
 
