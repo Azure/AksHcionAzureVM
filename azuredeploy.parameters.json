@@ -1,0 +1,60 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "adminUsername": {
+            "value": "adm01"
+        },
+        "domainName": {
+            "value": "corp.msft.fun"
+        },
+        "dnsPrefix": {
+            "value": "msftfundc"
+        },
+        "vmSize": {
+            "value": "Standard_E8s_v4"
+        },
+        "location": {
+            "value": "germanywestcentral"
+        },
+        "virtualMachineName": {
+            "value": "dc01"
+        },
+        "azsHCIHostCount": {
+            "value": 2
+        },
+        "virtualNetworkAddressRange": {
+            "value": "172.31.0.0/16"
+        },
+        "privateIPAddress": {
+            "value": "172.31.1.4"
+        },
+        "subnetRange": {
+            "value": "172.31.1.0/24"
+        },
+        "branch": {
+            "value": "master"
+        },
+        "azsHCIHostMemory": {
+            "value": 22
+        },
+        "vmStoreDiskSize": {
+            "value": 512
+        },
+        "enableHybridBenefitServerLicenses": {
+            "value": "Yes"
+        },
+        "autoShutdown": {
+            "value": "Enabled"
+        },
+        "autoShutdownTime": {
+            "value": "0200"
+        },
+        "autoShutdownTimeZone": {
+            "value": "UTC"
+        },
+        "aksHciScenario": {
+            "value": "onAzureVMDirectly"
+        }
+    }
+}
