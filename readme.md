@@ -22,7 +22,7 @@ Azure Stack HCI host and Windows Admin Center VMs will be created once ARM templ
 
 ## Using ARM template to deploy Azure VM
 
-Click the button below to deploy from the portal:
+Click the button below to deploy via Azure portal:
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fyagmurs%2FAzureStackHCIonAzure%2Ftest%2Fazuredeploy.json)
 
@@ -59,7 +59,7 @@ This is one of scenario if you are willing to understand how to deploy Aks Hci o
 
 ## How to run PoC once Azure VM deployed
 
-There are couple of shortcuts available on the desktop; can be utilized to demostraion or learning purposes to understand process and options
+There are couple of shortcuts available on the desktop. Desktop shortcuts can be utilized to demostrate or learning purposes to understand process and options
 
 * Proof of concepts guide (which is this guide)
 * Step by step lab Script, the script includes;
