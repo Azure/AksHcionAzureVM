@@ -8,7 +8,7 @@ $targetDrive = "V:"
 $AksHciTargetFolder = "AksHCIMain"
 $AksHciTargetPath = "$targetDrive\$AksHciTargetFolder"
 $sourcePath =  "$targetDrive\source"
-$targetClusterName = "target-cls1"
+$workloadClusterName = "workload-cls1"
 $tenant = "xxxxxxxxxxx.onmicrosoft.com"
 $subscriptionID = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 $rgName = "new-arc-rg"
@@ -73,9 +73,9 @@ Set-AksHciConfig @managementClusterParams
 
 Install-AksHci
 
-#Deploy Target Cluster
-$targetClusterParams = @{
-    clusterName = $targetClusterName
+#Deploy Workload Cluster
+$workloadClusterParams = @{
+    clusterName = $workloadClusterName
     kubernetesVersion = 'v1.18.8'
     controlPlaneNodeCount = 1
     linuxNodeCount = 1
@@ -86,7 +86,7 @@ $targetClusterParams = @{
     windowsNodeVmSize = 'default' # Get-AksHciVmSize
 }
 
-New-AksHciCluster @targetClusterParams
+New-AksHciCluster @workloadClusterParams
 
 
 #endregion Enable AksHCI
@@ -131,8 +131,8 @@ Get-Command -Module AksHci
 #List k8s clusters
 Get-AksHciCluster
 
-#Retreive AksHCI logs for Target Cluster deployment
-Get-AksHciCredential -clusterName $targetClusterName
+#Retreive AksHCI logs for Workload Cluster deployment
+Get-AksHciCredential -clusterName $workloadClusterName
 
 #region onboarding
 
@@ -162,7 +162,7 @@ $sp = New-AzADServicePrincipal -Role Contributor -Scope "/subscriptions/$subscri
 
 #https://docs.microsoft.com/en-us/azure-stack/aks-hci/connect-to-arc
 # Onboard Aks Hci to Azure Arc using Powershell
-Install-AksHciArcOnboarding -clusterName $targetClusterName -resourcegroup $rg.ResourceGroupName -location $rg.location -subscriptionId $context.Subscription.Id -clientid $sp.ApplicationId -clientsecret $credObject.GetNetworkCredential().Password -tenantid $context.Tenant.Id
+Install-AksHciArcOnboarding -clusterName $workloadClusterName -resourcegroup $rg.ResourceGroupName -location $rg.location -subscriptionId $context.Subscription.Id -clientid $sp.ApplicationId -clientsecret $credObject.GetNetworkCredential().Password -tenantid $context.Tenant.Id
 
 # get state of the onboarding process
 kubectl get pods -n azure-arc-onboarding
@@ -178,7 +178,7 @@ kubectl logs -n azure-arc-onboarding azure-arc-onboarding-<Name of the pod>
 # enable monitoring using Powershell
 # https://docs.microsoft.com/en-us/azure/azure-monitor/insights/container-insights-enable-arc-enabled-clusters
 Invoke-WebRequest https://aka.ms/enable-monitoring-powershell-script -OutFile enable-monitoring.ps1
-$azureArcClusterResourceId = "/subscriptions/$subscriptionID/resourceGroups/$($rg.ResourceGroupName)/providers/Microsoft.Kubernetes/connectedClusters/$targetClusterName"
+$azureArcClusterResourceId = "/subscriptions/$subscriptionID/resourceGroups/$($rg.ResourceGroupName)/providers/Microsoft.Kubernetes/connectedClusters/$workloadClusterName"
 $kubeContext = kubectl.exe config current-context
 $logAnalyticsWorkspaceResourceId = "/subscriptions/$subscriptionID/resourceGroups/$($rg.ResourceGroupName)/providers/microsoft.operationalinsights/workspaces/yagmurslog"
 .\enable-monitoring.ps1 -clusterResourceId $azureArcClusterResourceId -kubeContext $kubeContext -workspaceResourceId $logAnalyticsWorkspaceResourceId
@@ -192,7 +192,7 @@ $gitRepo = "https://github.com/Azure/arc-k8s-demo"
 
 # deploy demo application from Azure Arc Enabled Kubernetes from Azure portal (UI)
 <#
-    Go to Azure Portal --> Azure arc target kubernetes cluster --> select gitops and add, provide following information
+    Go to Azure Portal --> Azure arc Workload kubernetes cluster --> select gitops and add, provide following information
 
     Configuration name: cluster-config
     Operator instance name: cluster-config
@@ -205,7 +205,7 @@ $gitRepo = "https://github.com/Azure/arc-k8s-demo"
 # deploy demo application on Azure Arc Enabled Kubernetes using Azure Cli
 # https://docs.microsoft.com/en-us/azure/azure-arc/kubernetes/use-gitops-connected-cluster
 az login --tenant $tenant
-az k8sconfiguration create --name "cluster-config" --cluster-name $targetClusterName --resource-group $rg.ResourceGroupName --operator-instance-name "cluster-config" --operator-namespace 'cluster-config' --repository-url $gitRepo --scope "cluster" --cluster-type "connectedClusters" --operator-params "'--git-poll-interval 3s --git-readonly'"
+az k8sconfiguration create --name "cluster-config" --cluster-name $workloadClusterName --resource-group $rg.ResourceGroupName --operator-instance-name "cluster-config" --operator-namespace 'cluster-config' --repository-url $gitRepo --scope "cluster" --cluster-type "connectedClusters" --operator-params "'--git-poll-interval 3s --git-readonly'"
 
 # list all service config
 kubectl.exe get services
@@ -219,7 +219,7 @@ kubectl.exe get services azure-vote-front
 #region scale up
 
 # Scale up/down node count
-Set-AksHciClusterNodeCount -clusterName $targetClusterName -linuxNodeCount 1 -windowsNodeCount 0
+Set-AksHciClusterNodeCount -clusterName $workloadClusterName -linuxNodeCount 1 -windowsNodeCount 0
 
 # scale up azure vote application pod count
 
@@ -232,16 +232,16 @@ Set-AksHciClusterNodeCount -clusterName $targetClusterName -linuxNodeCount 1 -wi
 #region clean up
 
 # uninstall / remove from Azure Arc
-Uninstall-AksHciArcOnboarding -clusterName $targetClusterName
+Uninstall-AksHciArcOnboarding -clusterName $workloadClusterName
 
-#Retreive AksHCI logs for Target Cluster deployment
+#Retreive AksHCI logs for Workload Cluster deployment
 Get-AksHciLogs
 
 #List k8s clusters
 Get-AksHciCluster
 
-#Remove Target cluster
-Remove-AksHciCluster -clusterName $targetClusterName
+#Remove Workload cluster
+Remove-AksHciCluster -clusterName $workloadClusterName
 
 Uninstall-AksHci
 
