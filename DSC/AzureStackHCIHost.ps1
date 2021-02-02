@@ -71,8 +71,8 @@
     Import-DscResource -ModuleName 'cChoco'
     Import-DscResource -ModuleName 'DSCR_Shortcut'
     
-    $repoName = "AzureStackHCIonAzure"
-    $repoBaseUrl = "https://github.com/yagmurs/$repoName"
+    $repoName = "AksHcionAzureVM"
+    $repoBaseUrl = "https://github.com/Azure/$repoName"
     $branchFiles = "$repoBaseUrl/archive/$branch.zip"
     
     if ($aksHciScenario -eq 'onAzureVMDirectly') {
@@ -880,7 +880,7 @@
         {
             Path      = 'C:\Users\Public\Desktop\Poc Guide.lnk'
             Target    = 'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'
-            Arguments = "https://yagmurs.github.io/$repoName"
+            Arguments = "https://azure.github.io/$repoName"
             Icon      = 'shell32.dll,74'
         }
 
