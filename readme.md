@@ -8,7 +8,7 @@ Only Windows Admin Center VM will be created once ARM template successfully depl
 
 ### **Architecture of the deployment** (Aks Hci on Azure VM)
 
-![AksHciOnAzureStackHci](https://github.com/Azure/AksHcionAzureVM/.images/AksHcionAzureVM.png)
+![AksHciOnAzureStackHci](https://github.com/Azure/AksHcionAzureVM/raw/master/.images/AksHcionAzureVM.png)
 
 ## Aks Hci on Azure Stack HCI cluster
 
@@ -18,7 +18,7 @@ Azure Stack HCI host and Windows Admin Center VMs will be created once ARM templ
 
 ### **Architecture of the deployment** (Aks Hci on Azure Stack HCI cluster)
 
-![AksHciOnAzureStackHci](https://github.com/Azure/AksHcionAzureVM/.images/AksHciOnAzureStackHci.png)
+![AksHciOnAzureStackHci](https://github.com/Azure/AksHcionAzureVM/raw/master/.images/AksHciOnAzureStackHci.png)
 
 ## Using ARM template to deploy Azure VM
 
@@ -45,7 +45,7 @@ Note that all VMs deployed within the Azure VM use **same password** that has be
 
 This is one of scenario if you are willing to understand how to deploy Aks Hci and understand options.
 
-![ARM-akshcionAzureVM](https://github.com/Azure/AksHcionAzureVM/.images/ARM-akshcionAzureVM.png)
+![ARM-akshcionAzureVM](https://github.com/Azure/AksHcionAzureVM/raw/master/.images/ARM-akshcionAzureVM.png)
 
 **Note**: Once **'onAzureVMDirectly'** option selected for **'Aks Hci Scenario'** the following two option will be disregarded in the DSC configuration. As a result on WAC (Windows Admin Center) VM will be deployed.
 
@@ -53,7 +53,7 @@ This is one of scenario if you are willing to understand how to deploy Aks Hci a
 
 This is one of scenario if you are willing to understand how to deploy Aks Hci on Azure Stack HCI and understand options. This is also useful scenarion to test Azure Stack HCI only without deploying Aks Hci on top of Azure Stack Hci Cluster.
 
-![ARM-akshcionAzureStackHCICluster](https://github.com/Azure/AksHcionAzureVM/.images/ARM-akshcionAzureStackHCICluster.png)
+![ARM-akshcionAzureStackHCICluster](https://github.com/Azure/AksHcionAzureVM/raw/master/.images/ARM-akshcionAzureStackHCICluster.png)
 
 **Note**: Once **'onNestedAzureStackHciClusteronAzureVM'** option selected for **'Aks Hci Scenario'** Make sure the correlation between the deployment VM size and Azure Stack HCI host counts and Memory sizes are compatible. As a result a number of Azure Stack HCI VMs (specified in 'AzS Hci Host Count' with 'AzS Hci Host Memory') and WAC (Windows Admin Center) VM will be deployed on Azure VM.
 
