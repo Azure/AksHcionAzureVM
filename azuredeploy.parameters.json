@@ -12,7 +12,7 @@
             "value": "msftfundc"
         },
         "vmSize": {
-            "value": "Standard_E8s_v4"
+            "value": "Standard_E16s_v4"
         },
         "location": {
             "value": "germanywestcentral"
@@ -21,7 +21,7 @@
             "value": "dc01"
         },
         "azsHCIHostCount": {
-            "value": 2
+            "value": 3
         },
         "virtualNetworkAddressRange": {
             "value": "172.31.0.0/16"
@@ -36,7 +36,7 @@
             "value": "master"
         },
         "azsHCIHostMemory": {
-            "value": 22
+            "value": 32
         },
         "vmStoreDiskSize": {
             "value": 512
