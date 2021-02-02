@@ -1,6 +1,7 @@
 $rgPrefix = 'yagmurs-azurestack'
 $location = 'germanywestcentral'
-$branch = 'test'
+$baseUri = 'https://raw.githubusercontent.com/Azure/AksHcionAzureVM'
+$branch = 'master'
 $subs = Get-Content .\scripts\ignore\subscription.txt
 if (-not (Get-AzAccessToken))
 {
@@ -18,7 +19,7 @@ if ((Get-AzContext | Select-Object -ExpandProperty name) -notlike "$sub*")
     Get-AzSubscription | Out-GridView -PassThru | Select-AzSubscription
 }
 
-$paramUri = "https://raw.githubusercontent.com/yagmurs/AzureStackHCIonAzure/test/azuredeploy.parameters.json"
+$paramUri = "$baseUri/azuredeploy.parameters.json"
 $paramFileAsHash = ((Invoke-WebRequest -UseBasicParsing -Uri $paramUri).content | ConvertFrom-Json -AsHashtable)
 if (-not ($clearTextPassword))
 {
@@ -66,7 +67,7 @@ if ($dtype -eq "n")
 
     New-AzResourceGroup -Name $rgName -Location $templateParameterObject.location
     New-AzResourceGroupDeployment -ResourceGroupName $rgName `
-    -Name "azshcihost" -TemplateUri "https://raw.githubusercontent.com/yagmurs/AzureStackHCIonAzure/$branch/azuredeploy.json" `
+    -Name "azshcihost" -TemplateUri "$baseUri/$branch/azuredeploy.json" `
     -TemplateParameterObject $templateParameterObject
 }
 elseif ($dtype -eq "d")
@@ -80,6 +81,6 @@ elseif ($dtype -eq "d")
     
     Write-Verbose "Redeploying ARM template for VM on $rg Resource Group" -Verbose
     New-AzResourceGroupDeployment -ResourceGroupName $rg `
-    -Name "azshcihost" -TemplateUri "https://raw.githubusercontent.com/yagmurs/AzureStackHCIonAzure/$branch/azuredeploy.json" `
+    -Name "azshcihost" -TemplateUri "$baseUri/$branch/azuredeploy.json" `
     -TemplateParameterObject $templateParameterObject -Force -Verbose
 }
