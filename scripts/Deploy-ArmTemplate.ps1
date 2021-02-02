@@ -19,7 +19,7 @@ if ((Get-AzContext | Select-Object -ExpandProperty name) -notlike "$sub*")
     Get-AzSubscription | Out-GridView -PassThru | Select-AzSubscription
 }
 
-$paramUri = "$baseUri/azuredeploy.parameters.json"
+$paramUri = "$baseUri/$branch/azuredeploy.parameters.json"
 $paramFileAsHash = ((Invoke-WebRequest -UseBasicParsing -Uri $paramUri).content | ConvertFrom-Json -AsHashtable)
 if (-not ($clearTextPassword))
 {
